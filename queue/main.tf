@@ -6,12 +6,12 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "dri-terraform-state-store"
-    key     = "terraform.tfstate"
-    region  = "eu-west-2"
+    bucket         = "dri-terraform-state-store"
+    key            = "terraform.tfstate"
+    region         = "eu-west-2"
     dynamodb_table = "dri-terraform-state-lock"
-    encrypt = true
-    profile = "dri-terraform"
+    encrypt        = true
+    profile        = "dri-terraform"
   }
 }
 

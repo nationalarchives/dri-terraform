@@ -20,6 +20,6 @@ jobs:
       - name: Terraform Check
         id: fmt
         run: |
-          terraform init
+          terraform init -backend=false
           terraform validate
           terraform fmt -check --recursive

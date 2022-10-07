@@ -5,18 +5,19 @@ terraform {
       version = "~> 4.0"
     }
   }
+
   backend "s3" {
-    bucket         = "dri-terraform-state-store"
+    bucket         = "dri-tf-state-store"
     key            = "terraform.tfstate"
     region         = "eu-west-2"
     dynamodb_table = "dri-terraform-state-lock"
     encrypt        = true
-    profile        = "dri-terraform"
+    profile        = "mgmt-dri-terraform"
   }
 }
 
 provider "aws" {
-  profile = var.profile
+  profile = local.workspace["profile_name"]
   region  = var.region
 }
 

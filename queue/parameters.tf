@@ -2,22 +2,22 @@
 locals {
   env = {
     default = {
-      env_name = "dev"
+      env_name     = "dev"
       profile_name = "dev-dri-terraform"
     }
 
     dev = {
-      env_name = "dev"
+      env_name     = "dev"
       profile_name = "dev-dri-terraform"
     }
 
     stg = {
-      env_name = "stg"
+      env_name     = "stg"
       profile_name = "stg-dri-terraform"
     }
 
     prd = {
-      env_name = "prd"
+      env_name     = "prd"
       profile_name = "prd-dri-terraform"
     }
   }

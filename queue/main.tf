@@ -46,3 +46,8 @@ resource "aws_sqs_queue_policy" "allow_message" {
   policy    = templatefile("./templates/sqs_policy.json.tpl", { sqs_arn = aws_sqs_queue.terraform_queue.arn, sns_topic = "arn:aws:sns:${var.region}:${data.aws_ssm_parameter.tre_account_id.value}:${data.aws_ssm_parameter.tre_sns_topic.value}" })
 }
 
+resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
+  topic_arn = "arn:aws:sns:${var.region}:${data.aws_ssm_parameter.tre_account_id.value}:${data.aws_ssm_parameter.tre_sns_topic.value}"
+  protocol  = "sqs"
+  endpoint  = aws_sqs_queue.terraform_queue.arn
+}

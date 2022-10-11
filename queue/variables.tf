@@ -5,7 +5,7 @@ variable "region" {
 
 variable "queue_name" {
   description = "Name of the queue, this is used in naming the ARN"
-  default     = "mock-dri-tre-notification-receiver"
+  default     = "dri-tre-notification-receiver"
 }
 
 variable "profile" {

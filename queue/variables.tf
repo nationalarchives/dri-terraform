@@ -10,7 +10,7 @@ variable "queue_name" {
 
 variable "profile" {
   description = "The profile used by terraform to provision the resource"
-  default     = "dri-terraform"
+  default     = "dev-dri-terraform"
 }
 
 variable "delay" {

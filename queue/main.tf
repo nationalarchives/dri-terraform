@@ -5,18 +5,19 @@ terraform {
       version = "~> 4.0"
     }
   }
+
   backend "s3" {
-    bucket         = "dri-terraform-state-store"
+    bucket         = "dri-tf-state-store"
     key            = "terraform.tfstate"
     region         = "eu-west-2"
     dynamodb_table = "dri-terraform-state-lock"
     encrypt        = true
-    profile        = "dri-terraform"
+    profile        = "mgmt-dri-terraform"
   }
 }
 
 provider "aws" {
-  profile = var.profile
+  profile = local.workspace["profile_name"]
   region  = var.region
 }
 
@@ -45,3 +46,8 @@ resource "aws_sqs_queue_policy" "allow_message" {
   policy    = templatefile("./templates/sqs_policy.json.tpl", { sqs_arn = aws_sqs_queue.terraform_queue.arn, sns_topic = "arn:aws:sns:${var.region}:${data.aws_ssm_parameter.tre_account_id.value}:${data.aws_ssm_parameter.tre_sns_topic.value}" })
 }
 
+resource "aws_sns_topic_subscription" "user_updates_sqs_target" {
+  topic_arn = "arn:aws:sns:${var.region}:${data.aws_ssm_parameter.tre_account_id.value}:${data.aws_ssm_parameter.tre_sns_topic.value}"
+  protocol  = "sqs"
+  endpoint  = aws_sqs_queue.terraform_queue.arn
+}
